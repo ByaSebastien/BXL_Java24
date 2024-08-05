@@ -14,7 +14,6 @@ public class DemoException {
         }catch (Exception e){
             System.out.println("Failed");
         }
-
         System.out.println("Finished");
     }
 }

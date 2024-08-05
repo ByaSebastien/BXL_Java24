@@ -15,8 +15,10 @@ public class Courant extends Compte {
     }
 
     public void setLigneDeCredit(double ligneDeCredit){
-        if( ligneDeCredit >= 0 )
-            this.ligneDeCredit = ligneDeCredit;
+        if( ligneDeCredit < 0 ){
+            throw new RuntimeException("Ligne de credit negatif");
+        }
+        this.ligneDeCredit = ligneDeCredit;
     }
 
     // endregion
@@ -25,8 +27,7 @@ public class Courant extends Compte {
 
     @Override
     public void retrait(double montant){
-        if( montant <= getSolde() + ligneDeCredit )
-            super.retrait(montant);
+        super.retrait(montant,getLigneDeCredit());
     }
 
     @Override

@@ -33,7 +33,7 @@ public abstract class Compte implements Banker {
     }
 
     public void setTitulaire(Personne titulaire) {
-        if( titulaire != null )
+        if (titulaire != null)
             this.titulaire = titulaire;
         else
             throw new RuntimeException();
@@ -43,23 +43,33 @@ public abstract class Compte implements Banker {
     // region METHODS
 
     @Override
-    public void retrait(double montant){
-        if( montant > 0 )
-            solde -= montant;
+    public void retrait(double montant) {
+        retrait(montant,0);
     }
 
+    public void retrait(double montant, double limit) {
+        if (montant <= 0) {
+            throw new IllegalArgumentException("montant must be greater than 0");
+        }
+        if (montant > getSolde() + limit) {
+            throw new SoldeInsufisantException();
+        }
+        solde -= montant;
+    }
 
     @Override
-    public void depot(double montant){
-        if( montant > 0 )
-            solde+= montant;
+    public void depot(double montant) {
+        if (montant < 0){
+            throw new IllegalArgumentException("montant must be greater than 0");
+        }
+        solde += montant;
     }
 
     protected abstract double calculInteret();
 
     @Override
-    public void appliquerInteret(){
-        setSolde( getSolde() + calculInteret() );
+    public void appliquerInteret() {
+        setSolde(getSolde() + calculInteret());
     }
 
     // endregion

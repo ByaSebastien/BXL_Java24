@@ -25,9 +25,10 @@ public class Epargne extends Compte {
 
     @Override
     public void retrait(double montant) {
-        if( montant > 0 && getSolde() >= montant ){
-            super.retrait(montant);
-            setDateDernierRetrait( LocalDateTime.now() );
+        double soldePrec = getSolde();
+        super.retrait(montant);
+        if(soldePrec > getSolde()){
+            setDateDernierRetrait(LocalDateTime.now());
         }
     }
 
