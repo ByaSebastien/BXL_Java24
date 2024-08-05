@@ -5,7 +5,7 @@ public enum Ville {
     BRUXELLES("1000") ,
     LLN("1250");
 
-    public String codePostal;
+    public final String codePostal;
 
     Ville(String cp){
         this.codePostal = cp;
