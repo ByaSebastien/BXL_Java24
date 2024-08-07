@@ -19,6 +19,7 @@ public class DemoFilter {
 
         resultString.forEach(System.out::println);
 
+
 //        integers.stream()
 //                .filter(i -> i % 2 == 0)
 //                .toList()
