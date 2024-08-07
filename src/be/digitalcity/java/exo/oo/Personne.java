@@ -31,7 +31,7 @@ public class Personne {
 
     }
 
-    String getFullName(){
+    public String getFullName(){
         if( this.nom == null )
             return this.prenom;
 
