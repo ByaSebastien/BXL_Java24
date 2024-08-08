@@ -14,6 +14,7 @@ public class Banque {
     }
 
     public void addCompte(Compte compte) {
+        compte.subscribePassageEnNegatifEvent((c) -> passageEnNegatifAction(c));
         comptes.add(compte);
     }
 

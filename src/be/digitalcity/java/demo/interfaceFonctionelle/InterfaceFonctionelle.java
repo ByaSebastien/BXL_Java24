@@ -3,7 +3,9 @@ package be.digitalcity.java.demo.interfaceFonctionelle;
 import be.digitalcity.java.exo.oo.Personne;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class InterfaceFonctionelle {
     public static void main(String[] args) {
@@ -46,6 +48,8 @@ public class InterfaceFonctionelle {
         ClassePerdue classePerdue = new ClassePerdue();
 
         classePerdue.action(() -> truc());
+
+        Predicate<Integer> predicate = (nb) -> nb % 2 == 0;
     }
 
     public static void test(Action action){

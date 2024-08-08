@@ -14,7 +14,10 @@ public class Main {
             Compte compte = c;
             Object o = c;
 
+            Banque banque = new Banque("Belfius");
+            banque.addCompte(compte);
             c.setLigneDeCredit(100);
+            compte.depot(10);
             compte.retrait(100);
 
             System.out.println(compte.getSolde()); // -100

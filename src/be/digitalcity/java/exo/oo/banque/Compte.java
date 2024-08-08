@@ -1,13 +1,21 @@
 package be.digitalcity.java.exo.oo.banque;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Compte implements Banker {
-    private final String numero;
+    private String numero;
     private double solde;
     private Personne titulaire;
+    private final List<PassageEnNegatifSubscriber> passageEnNegatifEvent;
+
+    public Compte() {
+        this.passageEnNegatifEvent = new ArrayList<>();
+    }
 
     public Compte(String numero, Personne titulaire) {
+        this();
         this.numero = numero;
         this.titulaire = titulaire;
     }
@@ -44,7 +52,7 @@ public abstract class Compte implements Banker {
 
     @Override
     public void retrait(double montant) {
-        retrait(montant,0);
+        retrait(montant, 0);
     }
 
     public void retrait(double montant, double limit) {
@@ -54,12 +62,16 @@ public abstract class Compte implements Banker {
         if (montant > getSolde() + limit) {
             throw new SoldeInsufisantException();
         }
+        boolean estPositif = this.solde >= 0;
         solde -= montant;
+        if (estPositif && this.solde < 0) {
+            raisePassageEnNegatifEvent();
+        }
     }
 
     @Override
     public void depot(double montant) {
-        if (montant < 0){
+        if (montant < 0) {
             throw new IllegalArgumentException("montant must be greater than 0");
         }
         solde += montant;
@@ -70,6 +82,16 @@ public abstract class Compte implements Banker {
     @Override
     public void appliquerInteret() {
         setSolde(getSolde() + calculInteret());
+    }
+
+    public void subscribePassageEnNegatifEvent(PassageEnNegatifSubscriber subscriber) {
+        passageEnNegatifEvent.add(subscriber);
+    }
+
+    private void raisePassageEnNegatifEvent() {
+        for (PassageEnNegatifSubscriber subscriber : passageEnNegatifEvent) {
+            subscriber.execute(this);
+        }
     }
 
     // endregion
