@@ -54,8 +54,4 @@ public enum Dice {
                 .mapToInt(it -> it)
                 .sum();
     }
-
-    public int myfunc(Dice dice){
-        return dice.nbFaces;
-    }
 }

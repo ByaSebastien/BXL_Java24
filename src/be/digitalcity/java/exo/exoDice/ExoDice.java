@@ -30,6 +30,10 @@ public class ExoDice {
 //        System.out.println("Vous avez fait " + result);
 
         Dice.D6.roll(5,3);
+
+        Dice.D4.roll();
+
+        roll(Dice.D10);
     }
 
     public static int roll(Dice dice) {
